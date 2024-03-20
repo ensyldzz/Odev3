@@ -12,6 +12,7 @@ class QuizScreen extends StatefulWidget {
 class _QuizScreenState extends State<QuizScreen> {
   List<Question> questionList = getQuestion();
   int currentQuestionIndex = 0;
+  List<String> selectedAnswers = [];
 
   @override
   Widget build(BuildContext context) {
@@ -66,13 +67,17 @@ class _QuizScreenState extends State<QuizScreen> {
         child: Text(answer.answer),
         onPressed: () {
           setState(() {
+            selectedAnswers.add(answer.answer);
             if (currentQuestionIndex < questionList.length - 1) {
               currentQuestionIndex++;
             } else {
               showDialog(
                 context: context,
-                builder: (context) => const AlertDialog(
-                  title: Text("Bitti!"),
+                builder: (context) => AlertDialog(
+                  title: const Text("Bitti!"),
+                  content: Text(
+                    "Verilen cevaplar:$selectedAnswers",
+                  ),
                 ),
               );
             }
