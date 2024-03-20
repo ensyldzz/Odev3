@@ -66,22 +66,35 @@ class _QuizScreenState extends State<QuizScreen> {
       child: ElevatedButton(
         child: Text(answer.answer),
         onPressed: () {
-          setState(() {
-            selectedAnswers.add(answer.answer);
-            if (currentQuestionIndex < questionList.length - 1) {
-              currentQuestionIndex++;
-            } else {
-              showDialog(
-                context: context,
-                builder: (context) => AlertDialog(
-                  title: const Text("Bitti!"),
-                  content: Text(
-                    "Verilen cevaplar:$selectedAnswers",
+          setState(
+            () {
+              selectedAnswers.add(answer.answer);
+              if (currentQuestionIndex < questionList.length - 1) {
+                currentQuestionIndex++;
+              } else {
+                showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    title: const Text("SONUÇ"),
+                    content: Text(
+                      "Verilen cevaplar:$selectedAnswers",
+                    ),
+                    actions: <Widget>[
+                      TextButton(
+                          onPressed: () {
+                            setState(() {
+                              currentQuestionIndex = 0;
+                              selectedAnswers = [];
+                            });
+                            Navigator.of(context).pop();
+                          },
+                          child: const Text("Bitti!"))
+                    ],
                   ),
-                ),
-              );
-            }
-          });
+                );
+              }
+            },
+          );
         },
       ),
     );
